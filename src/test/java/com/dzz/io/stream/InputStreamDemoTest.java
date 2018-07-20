@@ -2,10 +2,7 @@ package com.dzz.io.stream;
 
 import org.junit.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Arrays;
 
 /**
@@ -64,4 +61,35 @@ public class InputStreamDemoTest {
         System.out.println(ints[i]);
         System.out.println(ints[++i]);
     }
+
+
+    class HeheOutputStream extends ByteArrayOutputStream {
+
+        public HeheOutputStream(int size) {
+            super(size);
+        }
+
+        @Override
+        public void flush() throws IOException {
+            System.out.println("hehe flush!");
+            super.flush();
+        }
+
+        @Override
+        public void close() throws IOException {
+            System.out.println("hehe close!");
+            super.close();
+        }
+    }
+
+    @Test
+    public void close() {
+        try (HeheOutputStream outputStream = new HeheOutputStream(24);) {
+            outputStream.write("hehe".getBytes(), 0, 4);
+            System.out.println(outputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
